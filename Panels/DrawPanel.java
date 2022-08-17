@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import Primitives2D.Circle2D.CircleGr;
 import Primitives2D.Line2D.LineGr;
+import Primitives2D.Line2D.PolygonalLine2D.PolygonalLine;
 import Primitives2D.Point2D.PointGr;
 
 /**
@@ -21,13 +22,23 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
 
   private final static Color BACKGROUND = Color.white;
   private final static Color FOREGROUND = Color.black;
-  private CircleGr circleGr;
-  private LineGr lineGr;
-  private boolean needPoint;
+
+  //Control variables
+  private boolean needPoint = false;
+  private boolean firstTime = true;
+
+  //Space variables (changes everytime)
   private int xLine;
   private int yLine;
+
+  //Type variable
   private Type type = new Type();
 
+  //Primitives 2D
+  private PolygonalLine polygonalLine;
+  private CircleGr circleGr;
+  private LineGr lineGr;
+  
   private void initialize() {
     setBackground(BACKGROUND);
     setForeground(FOREGROUND);
@@ -35,6 +46,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
     addMouseMotionListener(this);
     circleGr = new CircleGr(0, 0, 70);
     lineGr = new LineGr(0, 0, 0, 0);
+    polygonalLine = getNewPL();
   }
 
   public DrawPanel() {
@@ -95,9 +107,22 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
         break;
       case FREE:
         break;
+
+      case POLYGONAL_LINE:
+      if (firstTime) {
+        polygonalLine.setPointA(x, y);
+        firstTime = false;
+      }
+      polygonalLine.setPointB(x, y);
+      polygonalLine.draw(g);
+        break;
       default:
         break;
     }
+  }
+
+  PolygonalLine getNewPL(){
+    return new PolygonalLine();
   }
 
   /**
@@ -109,6 +134,11 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
   public boolean changeLineState() {
     needPoint = !needPoint;
     return needPoint;
+  }
+
+  public void resetControlVaribles(){
+    needPoint = false;
+    firstTime = true;
   }
 
   @Override
@@ -154,5 +184,6 @@ class Type {
 enum TypeButton {
   LINE,
   CIRCLE,
-  FREE
+  FREE,
+  POLYGONAL_LINE,
 }

@@ -23,7 +23,6 @@ public class CircleGr extends SuperCircleGr {
     PointGr point = new PointGr();
     // A constant to find the amount needs to loop
     double inc = 0.18 / (getRadius() / 300);
-    System.out.println("Inc:"+inc);
 
     for (angule = 0; angule <= 90; angule += inc) {
       plotPoint(angule, point, g);

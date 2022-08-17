@@ -48,7 +48,7 @@ public class Window extends JFrame {
 
   public ButtonPanel getButtonP() {
     if (buttonP == null) {
-      buttonP = new ButtonPanel((getDrawP().getTypeButton()));
+      buttonP = new ButtonPanel((getDrawP().getTypeButton()),drawP);
 
     }
     return buttonP;

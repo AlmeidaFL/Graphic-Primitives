@@ -8,11 +8,14 @@ import java.awt.*;
 public class ButtonPanel extends JPanel {
   private JButton circle;
   private JButton line;
+  private JButton polygonalLine;
   private Type type;
+  DrawPanel dPanel;
 
-  public ButtonPanel(Type type) {
+  public ButtonPanel(Type type, DrawPanel dPanel) {
     initialize();
     this.type = type;
+    this.dPanel = dPanel;
     setEvents();
   }
 
@@ -22,10 +25,12 @@ public class ButtonPanel extends JPanel {
     // Creating Buttons
     circle = new JButton("Circle");
     line = new JButton("Line");
+    polygonalLine = new JButton("Polygonal Line");
 
     // Adding buttons
     add(circle);
     add(line);
+    add(polygonalLine);
   }
 
   /**
@@ -36,7 +41,8 @@ public class ButtonPanel extends JPanel {
     circle.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        type.setType(TypeButton.CIRCLE);
+        type.setType(TypeButton.CIRCLE);  
+        dPanel.resetControlVaribles();
       }
     });
 
@@ -44,6 +50,15 @@ public class ButtonPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         type.setType(TypeButton.LINE);
+        dPanel.resetControlVaribles();
+      }
+    });
+
+    polygonalLine.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        type.setType(TypeButton.POLYGONAL_LINE);
+        dPanel.resetControlVaribles();
       }
     });
   }
